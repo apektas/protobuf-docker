@@ -13,6 +13,6 @@ RUN  cd /root && wget https://github.com/protocolbuffers/protobuf/releases/downl
 
 RUN  cd /root && wget https://github.com/protocolbuffers/protobuf/releases/download/v3.18.0/protobuf-all-3.18.0.tar.gz && \
     tar -zxvf protobuf-all-3.18.0.tar.gz && \
-    cd protobuf-3.18.0/ && ./configure && make && make check && make install && ldconfig
+    cd /root/protobuf-3.18.0/ && ./configure && make && make check && make install && ldconfig
 
 RUN rm -rf /root/protobuf-*
