@@ -1,13 +1,30 @@
-name: Publish Docker
-on: [push]
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@master
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: apektas/protobuf
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
+    - uses: actions/checkout@v2
+    - name: docker login
+      env: 
+        DOCKER_USER: ${{secrets.USERNAME}}
+        DOCKER_PASSWORD: ${{secrets.PASSWORD}} 
+      run: 
+        echo "prine all env variables"
+        env
+        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+    
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag apektas/protobuf:latest
+    
+    - name: Docker Push
+      run: docker push apektas/protobuf:latest
