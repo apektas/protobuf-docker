@@ -17,9 +17,10 @@ jobs:
     - name: docker login
       env: 
         DOCKER_USER: ${{secrets.USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.PASSWORD}}
-      run:
-        docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
+        DOCKER_PASSWORD: ${{secrets.PASSWORD}} 
+      run: echo "prine all env variables"
+      run: env
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
     
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag apektas/protobuf:$(date +%s)
